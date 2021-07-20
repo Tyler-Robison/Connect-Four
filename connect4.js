@@ -4,8 +4,8 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-const WIDTH = 7;
-const HEIGHT = 6;
+let HEIGHT = 6;
+let WIDTH = 7;
 
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
@@ -13,10 +13,15 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 const topRow = document.createElement("tr");
 
 let tie = false;
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
+const startButton = document.querySelector('#startButton');
 
+startButton.addEventListener('click', function(e){
+  e.preventDefault();
+  startGame();
+  document.querySelector('#startDiv').remove();
+})
+
+// Creates the JS board
 function makeBoard() {
   for (let i = 0; i < HEIGHT; i++) {
     board.push([]);
@@ -27,8 +32,7 @@ function makeBoard() {
   return board;
 }
 
-/** makeHtmlBoard: make HTML table and row of column tops. */
-
+// Creates the HTML board
 function makeHtmlBoard() {
   const htmlBoard = document.querySelector('#board')
   // creates table-row element, gives it col-top id then adds event listener.     
@@ -53,7 +57,10 @@ function makeHtmlBoard() {
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
+      const blankDiv = document.createElement('div');
+      blankDiv.classList.add('blank');
       cell.setAttribute("id", `${y}-${x}`);
+      cell.append(blankDiv);
       row.append(cell);
     }
     htmlBoard.append(row);
@@ -63,7 +70,6 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
   for (let i = 0; i < HEIGHT; i++) {
     if (board[i][x] === null) {
       y = i;
@@ -78,16 +84,9 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
   const div = document.createElement('div');
-  div.classList.add('piece');
-  if (currPlayer === 1) {
-    //handle click will alternate turns
-    //make this ternary func
-    div.classList.add('p1');
-  } else {
-    div.classList.add('p2');
-  }
+  div.classList.add('piece', 'drop');
+  currPlayer === 1 ? div.classList.add('p1') :  div.classList.add('p2');
   const cell = document.getElementById(`${y}-${x}`);
   //question 1 for mentor
   cell.append(div);
@@ -97,7 +96,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   topRow.removeEventListener("click", handleClick);
-  // TODO: pop up alert message
+  // Check if tie. If no tie, see who won and add corresponding class. 
   const p = document.createElement('p');
   p.innerText = msg;
   if (!tie) {
@@ -105,8 +104,6 @@ function endGame(msg) {
   } else {
     p.classList.add('tie-text')
   }
-  // const gameDiv = document.querySelector('#game')
-  // gameDiv.append(p);
   document.body.append(p);
 }
 
@@ -121,25 +118,22 @@ function handleClick(evt) {
     return;
   }
 
-  // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  // Updates JS board then places colored div in HTML board. 
   board[y][x] = currPlayer
   placeInTable(y, x);
 
   // check for win
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currPlayer} wins!`);
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
   if (checkForTie()) {
     tie = true;
     return endGame(`It's a tie!`);
   }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
   currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
 }
 
@@ -161,7 +155,12 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
+  // This loop creates 4 variables corresponding to all 4 possible ways to win.
+  // These variables are fed into the _win function when it is invoked. 
+  // brute force checks whole board against the 4 possible win conditions. 
+  // checking not based on last placed piece, brute force check whole thing. 
+  // _win gets invoked 168 times.
+  // If function returns true for any of 4 win conditions then checkForWin returns true.
 
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
@@ -177,11 +176,21 @@ function checkForWin() {
   }
 }
 
+//If top row is full then its a tie. 
 function checkForTie() {
   return board[0].every(function (ele) {
     return ele !== null;
   })
 }
 
+// function startGame(){
+//   const WIDTH = parseInt(document.querySelector('#widthSelect').value);
+//   const HEIGHT = parseInt(document.querySelector('#heightSelect').value);
+// makeBoard(WIDTH, HEIGHT);
+// makeHtmlBoard(WIDTH, HEIGHT);
+// }
+
+function startGame(){
 makeBoard();
 makeHtmlBoard();
+}

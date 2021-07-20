@@ -5,19 +5,37 @@ body {
   background-color: lightblue;
 }
 
+#startDiv {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: darkblue;
+  z-index: 100;
+}
+
+#startP {
+  color: yellow;
+  font-size: 120px;
+  margin-top: 20vh;
+  text-align: center;
+}
+
+#startButton {
+  position: relative;
+  left: 45%;
+  font-size: 20px;
+  padding: 1% 2%;
+}
+
 #mainDiv {
   width: 38%;
   background-color: white;
   border: solid 2px black;
-  border-radius: 1%;
 }
 
 #board {
   width: 100%;
   height: 72vh;
-  /* position: fixed;
-  left: 25%;
-  top: 10%; */
 }
 
 h1 {
@@ -26,34 +44,66 @@ h1 {
   margin-bottom: 2%;
 }
 
+table {
+  border-spacing: 0px;
+}
+
 #board td {
     width: 50px;
     height: 50px;
-    border: solid 1px #666;
+    background-color: rgb(236, 236, 0);
+    position: relative;
   }
-  
-  .piece {
+
+  .blank {
+    background-color: white;
     border-radius: 50%;
-    margin: 5px;
+    margin: 10%;
     width: 80%;
     height: 80%;
   }
   
+  .piece {
+    border-radius: 50%;
+    margin: 10%;
+    width: 80%;
+    height: 80%;
+  }
+
+  .p1 {
+    background-color: red;
+  }
+
+  .p2 {
+    background-color: blue;
+  }
+  
   #column-top td {
     border: dashed 1px lightgray;
+    background-color: white;
   }
   
   #column-top td:hover {
     background-color: gold;
   }
-    
-  .p1 {
-      background-color: red;
-    }
 
-  .p2 {
-      background-color: blue;
-    }
+  .drop {
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    animation: dropPiece 1s;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes dropPiece {
+  0% {
+    bottom: 500px;
+  }
+
+  100% {
+    bottom: 0px;
+  }
+}
 
 .win-text-red {
   color: red;

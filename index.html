@@ -1,17 +1,37 @@
 <!doctype html>
+
 <head>
   <title>Connect 4</title>
   <link href="connect4.css" rel="stylesheet">
 </head>
+
 <body>
   <h1>Connect Four!</h1>
-  <div id="mainDiv">
-<div id="game">
-  <table id="board"></table>
-</div>
-</div>
+  <div id="startDiv">
+    <p id="startP">Connect 4</p> <button id="startButton">Start Game</button>
 
-<script src="connect4.js"></script>
+    <select id="heightSelect">
+      <option value="6" selected>6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+    </select>
+
+    <select id="widthSelect">
+      <option value="7" selected>7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+
+  </div>
+  <div id="mainDiv">
+    <div id="game">
+      <table id="board"></table>
+    </div>
+  </div>
+
+  <script src="connect4.js"></script>
 
 </body>
+
 </html>
