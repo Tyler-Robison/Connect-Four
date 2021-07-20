@@ -22,7 +22,7 @@ startButton.addEventListener('click', function(e){
 })
 
 // Creates the JS board
-function makeBoard() {
+function makeBoard(WIDTH, HEIGHT) {
   for (let i = 0; i < HEIGHT; i++) {
     board.push([]);
     for (let j = 0; j < WIDTH; j++) {
@@ -33,7 +33,7 @@ function makeBoard() {
 }
 
 // Creates the HTML board
-function makeHtmlBoard() {
+function makeHtmlBoard(WIDTH, HEIGHT) {
   const htmlBoard = document.querySelector('#board')
   // creates table-row element, gives it col-top id then adds event listener.     
   // The for loop runs x times with x= board width, each td in tr is given the x value 
@@ -183,14 +183,9 @@ function checkForTie() {
   })
 }
 
-// function startGame(){
-//   const WIDTH = parseInt(document.querySelector('#widthSelect').value);
-//   const HEIGHT = parseInt(document.querySelector('#heightSelect').value);
-// makeBoard(WIDTH, HEIGHT);
-// makeHtmlBoard(WIDTH, HEIGHT);
-// }
-
 function startGame(){
-makeBoard();
-makeHtmlBoard();
+  WIDTH = parseInt(document.querySelector('#widthSelect').value);
+  HEIGHT = parseInt(document.querySelector('#heightSelect').value);
+makeBoard(WIDTH, HEIGHT);
+makeHtmlBoard(WIDTH, HEIGHT);
 }

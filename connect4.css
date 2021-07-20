@@ -25,6 +25,24 @@ body {
   left: 45%;
   font-size: 20px;
   padding: 1% 2%;
+  background-color: rgb(247, 247, 121);
+  border-radius: 5px;
+}
+
+#selectDiv{
+  height: 100px;
+  width: 400px;
+  display: inline-block;
+  position: absolute;
+  left: 42%;
+  bottom: 30%;
+  font-size: 40px;
+  color: yellow;
+}
+
+#selectDiv select{
+ margin: 20px;
+ font-size: 40px;
 }
 
 #mainDiv {
