@@ -15,7 +15,7 @@ const topRow = document.createElement("tr");
 let tie = false;
 const startButton = document.querySelector('#startButton');
 
-startButton.addEventListener('click', function(e){
+startButton.addEventListener('click', (e) => {
   e.preventDefault();
   startGame();
   document.querySelector('#startDiv').remove();
@@ -34,11 +34,10 @@ function makeBoard(WIDTH, HEIGHT) {
 
 // Creates the HTML board
 function makeHtmlBoard(WIDTH, HEIGHT) {
-  const htmlBoard = document.querySelector('#board')
+  const htmlBoard = document.querySelector('#board');
   // creates table-row element, gives it col-top id then adds event listener.     
   // The for loop runs x times with x= board width, each td in tr is given the x value 
   // from that loop iteration as its ID. 
-
 
   topRow.setAttribute("id", "column-top");
   topRow.addEventListener("click", handleClick);
@@ -85,10 +84,8 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   const div = document.createElement('div');
-  div.classList.add('piece', 'drop');
-  currPlayer === 1 ? div.classList.add('p1') :  div.classList.add('p2');
+  div.classList.add('piece', 'drop', `p${currPlayer}`);
   const cell = document.getElementById(`${y}-${x}`);
-  //question 1 for mentor
   cell.append(div);
 }
 
@@ -99,11 +96,7 @@ function endGame(msg) {
   // Check if tie. If no tie, see who won and add corresponding class. 
   const p = document.createElement('p');
   p.innerText = msg;
-  if (!tie) {
-    currPlayer === 1 ? p.classList.add('win-text-red') : p.classList.add('win-text-blue');
-  } else {
-    p.classList.add('tie-text')
-  }
+  tie ? p.classList.add('tie-text') : currPlayer === 1 ? p.classList.add('win-text-red') : p.classList.add('win-text-blue');
   document.body.append(p);
 }
 
@@ -119,7 +112,7 @@ function handleClick(evt) {
   }
 
   // Updates JS board then places colored div in HTML board. 
-  board[y][x] = currPlayer
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
@@ -156,11 +149,9 @@ function checkForWin() {
   }
 
   // This loop creates 4 variables corresponding to all 4 possible ways to win.
-  // These variables are fed into the _win function when it is invoked. 
-  // brute force checks whole board against the 4 possible win conditions. 
-  // checking not based on last placed piece, brute force check whole thing. 
-  // _win gets invoked 168 times.
-  // If function returns true for any of 4 win conditions then checkForWin returns true.
+  // These variables are entered into the _win function when it is invoked. 
+  // _win brute force checks whole board (168 times) against the 4 possible win conditions. 
+  // checking isn't based on last placed piece, brute force check whole thing. 
 
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
@@ -177,15 +168,11 @@ function checkForWin() {
 }
 
 //If top row is full then its a tie. 
-function checkForTie() {
-  return board[0].every(function (ele) {
-    return ele !== null;
-  })
-}
+const checkForTie = () => board[0].every(ele => ele !== null);
 
-function startGame(){
+function startGame() {
   WIDTH = parseInt(document.querySelector('#widthSelect').value);
   HEIGHT = parseInt(document.querySelector('#heightSelect').value);
-makeBoard(WIDTH, HEIGHT);
-makeHtmlBoard(WIDTH, HEIGHT);
+  makeBoard(WIDTH, HEIGHT);
+  makeHtmlBoard(WIDTH, HEIGHT);
 }
