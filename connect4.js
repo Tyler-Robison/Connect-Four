@@ -42,6 +42,7 @@ function makeHtmlBoard(WIDTH, HEIGHT) {
   topRow.setAttribute("id", "column-top");
   topRow.addEventListener("click", handleClick);
 
+  //creates the individual cells in topRow.
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
@@ -49,7 +50,7 @@ function makeHtmlBoard(WIDTH, HEIGHT) {
   }
   htmlBoard.append(topRow);
 
-  // outer for loop loop runs HEIGHT (6) times
+  // outer for loop runs HEIGHT (6) times
   // inner loop creates the cells that populate table
   // id is set by str temp lit that uses y (height) and x (width) to create a coord-grid
   for (let y = 0; y < HEIGHT; y++) {
